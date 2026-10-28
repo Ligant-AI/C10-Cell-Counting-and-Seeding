@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/ https://www.googletagmanager.com; style-src 'self'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://benchtools.ligant.ai/cdn-cgi/rum https://benchtools.ligant.ai/api/subscribe https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://*.g.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'none'">
+  
+  <link rel="icon" id="favicon" href="data:,">
+  <meta name="referrer" content="no-referrer">
+  <title>Ligant · Cell Counting and Seeding</title>
+  <meta name="description" content="Free, open source hemocytometer calculator: cells/mL, viability, total cells and seeding volumes, every step shown. Runs in your browser.">
+  <link rel="canonical" href="https://benchtools.ligant.ai/cell-counting-and-seeding/">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#FAF7F2">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://benchtools.ligant.ai/cell-counting-and-seeding/">
+  <meta property="og:site_name" content="Ligant Bench Tools">
+  <meta property="og:title" content="Ligant · Cell Counting and Seeding">
+  <meta property="og:description" content="Free, open source hemocytometer calculator: cells/mL, viability, total cells and seeding volumes, every step shown. Runs in your browser.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://benchtools.ligant.ai/cell-counting-and-seeding/og-image.png">
+  <meta name="twitter:title" content="Ligant · Cell Counting and Seeding">
+  <meta name="twitter:description" content="Free, open source hemocytometer calculator: cells/mL, viability, total cells and seeding volumes, every step shown. Runs in your browser.">
+  <meta property="og:image" content="https://benchtools.ligant.ai/cell-counting-and-seeding/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ligant. Cell Counting and Seeding. Calculates cells/mL, viability, total cells and seeding volumes from hemocytometer counts. A worked count shown step by step. Example panel, an illustration with invented counts: mean 90 cells per square, dilution 2, square volume 0.1 microliters; 90 times 2 times 1000 divided by 0.1 gives 1.80 times 10 to the 6 live cells per mL. Free bench tool for cell counting. benchtools.ligant.ai">
+  <meta name="twitter:image:alt" content="Ligant. Cell Counting and Seeding. Calculates cells/mL, viability, total cells and seeding volumes from hemocytometer counts. A worked count shown step by step. Example panel, an illustration with invented counts: mean 90 cells per square, dilution 2, square volume 0.1 microliters; 90 times 2 times 1000 divided by 0.1 gives 1.80 times 10 to the 6 live cells per mL. Free bench tool for cell counting. benchtools.ligant.ai">
+  <link rel="stylesheet" href="./src/tokens.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="app">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead" id="site-header"></header>
+  <main id="main">
+    <div id="app"></div>
+    <section class="panel about" id="about">
+      <div class="panel-head"><h2>About this calculator</h2></div>
+      <h3>What it does</h3>
+      <p>Cell Counting and Seeding turns a hemocytometer count into a concentration, a viability, a total number of cells and the volumes to seed. You count live and dead cells in the squares of one chamber loading, say which chamber, which square and how the cells were diluted, and the page gives cells/mL for live, dead and all cells, viability with its method named, total cells, and the Poisson counting CV on the live count. Give a target density in cells per mL of final culture volume and it gives the volume of suspension and the volume of medium to seed. A split by ratio gives the transfer volume and the fresh medium. Every step is shown with your own numbers.</p>
+      <h3>How to use it</h3>
+      <ol>
+        <li>Click "Load worked example" to fill the inputs with an example (invented counts, labelled as such). The example leaves two choices to you, the border rule and the sample source, because they describe your own practice and sample. Make them, and watch each line of the arithmetic.</li>
+        <li>Choose the chamber: Improved Neubauer, Fuchs-Rosenthal, or Other chamber, where you type the square area (mm²) and depth (mm) engraved on or measured for your chamber. Read the depth on your own chamber and confirm it against the preset. Nothing is chosen for you.</li>
+        <li>Choose the square you counted. We ask because the same count means a different concentration in a different square: the square's volume sets the answer.</li>
+        <li>Choose the border rule: cells touching the top and left lines counted and bottom and right excluded, or your lab's own rule.</li>
+        <li>Enter the dilution as "1 part cell suspension in ___ parts total". Equal parts of dye and cells is 1 part in 2 parts total, a factor of 2. We ask because the dye dilutes the cells: leave it out and the concentration reads too low by that factor; apply it twice and it reads too high by the same factor.</li>
+        <li>Choose the viability method (trypan blue, AO/PI, or a flow viability dye with its name). We ask because "live" and "dead" are defined by the method that sorted the cells, so a viability is only complete with its method.</li>
+        <li>Say whether your suspension volume was measured before or after you took the counting sample, and enter it. We ask because cells taken out for counting are no longer in the suspension: if your volume was measured before you took them, the cells left are concentration times the smaller, remaining volume.</li>
+        <li>Choose the sample source. It is a record, printed in the header of every export. Nothing is computed differently for any source.</li>
+        <li>Enter the live and dead count for each square counted. One chamber loading per calculation: counts from separate loadings or chambers are replicates, so enter each as its own calculation.</li>
+        <li>Enter a target density (cells per mL of final culture volume) and the final volume to seed, or a split ratio and the new vessel's volume.</li>
+        <li>Open "Show the working" to see every relation with your numbers, and export notebook text, CSV or JSON.</li>
+      </ol>
+      <h3>How it works</h3>
+      <p>Every relation is computed at full precision and rounded only for display. Concentrations and totals show 3 significant figures, viability 1 decimal place, the counting CV 2 decimal places, volumes 3 significant figures, and the square volume its exact decimal.</p>
+      <table>
+        <thead><tr><th>Step</th><th>Relation</th></tr></thead>
+        <tbody>
+          <tr><td>Strength factor</td><td>f = parts total, for "1 part cell suspension in P parts total"</td></tr>
+          <tr><td>Square volume</td><td>V_sq (µL) = square area A (mm²) × chamber depth d (mm), because 1 mm³ = 1 µL</td></tr>
+          <tr><td>Mean per square</td><td>The sum of the live counts divided by the number of squares counted; the same for dead</td></tr>
+          <tr><td>Live cells/mL</td><td>mean live per square × f × 1000 ÷ V_sq (µL), because 1 mL = 1000 µL</td></tr>
+          <tr><td>Dead cells/mL</td><td>The same arithmetic applied to the cells counted as dead. It is not a separately published formula.</td></tr>
+          <tr><td>All cells/mL</td><td>live + dead</td></tr>
+          <tr><td>Viability (method)</td><td>live counted ÷ (live + dead) counted × 100</td></tr>
+          <tr><td>Total cells</td><td>cells/mL × suspension volume (mL), as live cells and as all cells; if the volume was measured before the counting sample, also the live cells remaining after it</td></tr>
+          <tr><td>Poisson counting CV</td><td>100 ÷ √N, N = the sum of the live counts across all squares</td></tr>
+          <tr><td>Seeding</td><td>cells needed = target density × final volume; suspension = cells needed ÷ live cells/mL; medium = final volume minus suspension</td></tr>
+          <tr><td>Split by ratio</td><td>transfer = new vessel volume ÷ N; fresh medium = new vessel volume minus transfer. It uses volumes only; it does not use your count.</td></tr>
+        </tbody>
+      </table>
+      <p>Constants the chamber presets use:</p>
+      <table>
+        <thead><tr><th>Chamber</th><th>Depth</th><th>Squares</th><th>Where it comes from</th></tr></thead>
+        <tbody>
+          <tr><td>Improved Neubauer</td><td>0.1 mm</td><td>1, 0.0625, 0.05, 0.04 or 0.0025 mm²; the large square holds 0.1 µL</td><td>Wikipedia, "Hemocytometer"</td></tr>
+          <tr><td>Fuchs-Rosenthal</td><td>0.2 mm</td><td>large square 1 mm² (0.2 µL); small square 0.0625 mm² (0.0125 µL)</td><td>MSF catalogue: depth 0.2 mm and 0.2 µL per square. The 1 mm² area (0.2 µL ÷ 0.2 mm) and the small-square reading are derived; see below.</td></tr>
+          <tr><td>Other chamber</td><td>as you type it</td><td>as you type it</td><td>Chamber dimensions entered by you; this page has no preset for this chamber.</td></tr>
+        </tbody>
+      </table>
+      <p>The preset fills the depth only, and you can edit it. The MSF catalogue lists a 0.0625 mm² surface but does not say what it is; this page reads it as the 0.25 × 0.25 mm sub-square, which is a derivation, not MSF's claim. Fuchs-Rosenthal squares differ 16-fold in volume. Illustration (invented counts): the same count, 90 cells in one square with 1 part cell suspension in 2 parts total, gives 9.00 × 10<sup>5</sup> cells/mL in the large square and 1.44 × 10<sup>7</sup> cells/mL in the small one.</p>
+      <p>The × 10<sup>4</sup> line. The page always computes from the square's volume, and has no × 10<sup>4</sup> option. Beside each concentration, "Show the working" says whether × 10<sup>4</sup> would give the same answer: it does only if the square holds exactly 0.1 µL. Otherwise it says by how many fold × 10<sup>4</sup> would be too high or too low, or, if the difference is under 0.5 %, says that. For example, × 10<sup>4</sup> would be 25-fold low on a 0.04 mm² Improved Neubauer square and 2-fold high on a Fuchs-Rosenthal large square.</p>
+      <p>The counting CV. If cell positions are random (Poisson), counting alone gives a CV of about 1/√N. Illustration (invented counts): for 100 live cells counted, 10.00 %. This is the counting error only; pipetting, dilution and chamber loading add their own.</p>
+      <p>The engine version is printed in "Show the working" and in every export. Results from different engine versions are not comparable.</p>
+      <p><a href="https://github.com/Ligant-AI/C10-Cell-Counting-and-Seeding">Read the code</a>.</p>
+      <h3>Why not a spreadsheet?</h3>
+      <ul>
+        <li>Every assumption is a recorded choice: chamber, square, border rule, dilution, viability method and sample source have no default, and no result appears until they are chosen.</li>
+        <li>Units travel with the numbers, and each conversion is printed (1 mm³ = 1 µL; 1 mL = 1000 µL).</li>
+        <li>Rounding happens once, on display. The CSV and JSON exports carry the unrounded values beside the displayed ones.</li>
+        <li>Flags say in words what to check, for example when a dye is named but the dilution is 1 part in 1 part total, or when you counted later than the time limit you set yourself.</li>
+        <li>The same inputs always give the same outputs, and each export records the declarations, the constants with their sources and the engine version.</li>
+      </ul>
+      <h3 id="does-not-do">What it does not do</h3>
+      <ul>
+        <li>It does not work with automated counters, and has no counter mode.</li>
+        <li>It does not give bead-based absolute counts.</li>
+        <li>It has no Bürker preset: use Other chamber with the dimensions engraved on yours.</li>
+        <li>It does not compute population doublings.</li>
+        <li>It gives no optimal-density advice.</li>
+        <li>It does not review the record.</li>
+        <li>It does not detect clumps, debris or bad loading.</li>
+        <li>It does not judge your viability against any threshold.</li>
+        <li>It does not check your counts per square against a range.</li>
+        <li>It does not judge whether a count, a viability value or a culture is acceptable; that judgement is yours.</li>
+        <li>It is not for counting cells in blood, body fluids or other specimens taken from a person.</li>
+        <li>It seeds by cells per mL of final culture volume only. Seeding by cells per cm² of growth area is not in this version.</li>
+        <li>It is a research calculation, not a batch record: the exports are a count record you transcribe, and carry no electronic signature or audit trail.</li>
+        <li>Not in this version: the printable bench sheet and the seeding and passage record (cell line, passage number, per-cm² seeding). They come in the next release.</li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

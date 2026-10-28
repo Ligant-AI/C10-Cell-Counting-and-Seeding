@@ -1,0 +1,16 @@
+export const CONFIG = Object.freeze({
+    toolTitle: 'Cell Counting and Seeding',
+    toolId: 'C10',
+    productLine: 'Ligant Bench Tools',
+    publisher: 'Ligant',
+    legalEntity: 'Ligant AI Incorporated',
+    version: '0.0.0',
+    slug: 'cell-counting-and-seeding',
+    publicBase: 'https://benchtools.ligant.ai/',
+    repositoryUrl: 'https://github.com/Ligant-AI/C10-Cell-Counting-and-Seeding',
+    doi: null,
+    citationAuthor: 'Modi, A.B.',
+    citationYear: '2026',
+    tagline: 'Free, open source hemocytometer calculator: cells/mL, viability, total cells and seeding volumes, every step shown. Runs in your browser.',
+    disclaimer: 'Research use only. Not qualified for GxP decision-making.',
+});

@@ -1,0 +1,23 @@
+{
+  "name": "c10-cell-counting-and-seeding",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Hemocytometer cell counts, viability, total cells, seeding and split volumes. Research use only.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5179",
+    "build": "vite build",
+    "preview": "vite preview --port 5179"
+  },
+  "dependencies": {
+    "@ligant/bench-chrome": "file:vendor/ligant-bench-chrome-1.8.1.tgz",
+    "@ligant/bench-engines": "file:vendor/ligant-bench-engines-0.1.0.tgz"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
