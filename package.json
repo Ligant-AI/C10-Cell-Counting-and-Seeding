@@ -11,7 +11,7 @@
     "preview": "vite preview --port 5179"
   },
   "dependencies": {
-    "@ligant/bench-chrome": "file:vendor/ligant-bench-chrome-1.8.1.tgz",
+    "@ligant/bench-chrome": "file:vendor/ligant-bench-chrome-1.11.1.tgz",
     "@ligant/bench-engines": "file:vendor/ligant-bench-engines-0.1.0.tgz"
   },
   "devDependencies": {
